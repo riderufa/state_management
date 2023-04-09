@@ -1,4 +1,3 @@
-import '../models/product.dart';
 import '../models/cart.dart';
 
 CartData _cart = const CartData(0, 'First cart title', []);
