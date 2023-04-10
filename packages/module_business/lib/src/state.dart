@@ -4,7 +4,7 @@ import 'package:module_data/module_data.dart';
 
 class CartController with ChangeNotifier {
   late CartData cart;
-  late List<Product> products = [];
+  late List<ProductData> products = [];
 
   final ProductRepositoryInterface _productRepository;
   final CartRepositoryInterface _cartRepository;
@@ -21,12 +21,12 @@ class CartController with ChangeNotifier {
     notifyListeners();
   }
 
-  void addProductToCart(Product product) async {
+  void addProductToCart(ProductData product) async {
     cart = await _productRepository.addProductToCart(product, cart);
     notifyListeners();
   }
 
-  void removeProductFromCart(Product product) async {
+  void removeProductFromCart(ProductData product) async {
     cart = await _productRepository.removeProductFromCart(product, cart);
     notifyListeners();
   }

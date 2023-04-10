@@ -1,6 +1,6 @@
 import '../models/cart.dart';
 
-CartData _cart = const CartData(0, 'First cart title', []);
+CartData _cart = const CartData(id: 0, title: 'First cart title', products: []);
 
 abstract class CartRepositoryInterface {
   Future<CartData> fetchOne();
