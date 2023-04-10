@@ -15,14 +15,14 @@ List<Product> _products = const [
   Product(10, 'Eleventh product title'),
 ];
 
-abstract class ProductManagerInterface {
+abstract class ProductRepositoryInterface {
   Future<List<Product>> fetchAll();
   Future<Product> fetchOne(int productId);
   Future<CartData> addProductToCart(Product product, CartData cart);
   Future<CartData> removeProductFromCart(Product product, CartData cart);
 }
 
-class ProductManager implements ProductManagerInterface {
+class ProductRepository implements ProductRepositoryInterface {
   @override
   Future<CartData> addProductToCart(Product product, CartData cart) async {
     await Future.delayed(const Duration(seconds: 1));

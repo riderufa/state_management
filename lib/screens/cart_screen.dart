@@ -10,7 +10,7 @@ class CartPage extends StatelessWidget {
     return Center(
       child: Consumer<CartController>(
         builder: (context, state, child) => ListView(
-          children: state.cart!.products
+          children: state.cart.products
               .map(
                 (e) => Padding(
                   padding: const EdgeInsets.all(8.0),

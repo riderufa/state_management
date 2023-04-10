@@ -31,8 +31,6 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    context.read<CartController>().getProducts();
-    context.read<CartController>().getCart();
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
       setState(() {
@@ -88,30 +86,33 @@ class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView(
-        children: context
-                .watch<CartController>()
-                .products
-                ?.map((e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            e.title,
-                            style: const TextStyle(fontSize: 20),
+      child: Consumer<CartController>(
+        builder: (context, state, child) => !state.isLoaded
+            ? const CircularProgressIndicator()
+            : ListView(
+                children: context
+                    .watch<CartController>()
+                    .products
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                e.title,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const Spacer(),
+                              ElevatedButton(
+                                onPressed: () => context
+                                    .read<CartController>()
+                                    .addProductToCart(e),
+                                child: const Text('Add to cart'),
+                              ),
+                            ],
                           ),
-                          const Spacer(),
-                          ElevatedButton(
-                            onPressed: () => context
-                                .read<CartController>()
-                                .addProductToCart(e),
-                            child: const Text('Add to cart'),
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList() ??
-            [],
+                        ))
+                    .toList(),
+              ),
       ),
     );
   }

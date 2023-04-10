@@ -14,11 +14,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<CartController>(
-      create: (_) => CartController(
-        productManager: locator[ProductManagerInterface]!,
-        cartManager: locator[CartManagerInterface]!,
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartController(
+            CartRepository(),
+            ProductRepository(),
+          ),
+        )
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
