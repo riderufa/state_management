@@ -18,15 +18,15 @@ List<ProductData> _products = const [
 abstract class ProductRepositoryInterface {
   Future<List<ProductData>> fetchAll();
   Future<ProductData> fetchOne(int productId);
-  Future<CartData> addProductToCart(ProductData product, CartData cart);
-  Future<CartData> removeProductFromCart(ProductData product, CartData cart);
+  Future<List<ProductData>> addProductToCart(List<ProductData> cartProducts, ProductData product);
+  Future<List<ProductData>> removeProductFromCart(List<ProductData> cartProducts, ProductData product);
 }
 
 class ProductRepository implements ProductRepositoryInterface {
   @override
-  Future<CartData> addProductToCart(ProductData product, CartData cart) async {
+  Future<List<ProductData>> addProductToCart(List<ProductData> cartProducts, ProductData product) async {
     await Future.delayed(const Duration(seconds: 1));
-    return cart.copyWith(products: [...cart.products, product]);
+    return [...cartProducts, product];
   }
 
   @override
@@ -42,10 +42,10 @@ class ProductRepository implements ProductRepositoryInterface {
   }
 
   @override
-  Future<CartData> removeProductFromCart(ProductData product, CartData cart) async {
+  Future<List<ProductData>> removeProductFromCart(List<ProductData> cartProducts, ProductData product) async {
     await Future.delayed(const Duration(seconds: 1));
-    List<ProductData> newProducts = cart.products;
+    List<ProductData> newProducts = cartProducts;
     newProducts.remove(product);
-    return cart.copyWith(products: newProducts);
+    return cartProducts;
   }
 }
