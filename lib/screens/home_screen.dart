@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:module_business/module_business.dart';
 import 'package:module_data/module_data.dart';
 import 'package:state_management/screens/cart_screen.dart';
@@ -27,14 +28,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late final CartBloc _bloc;
   int _currentTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _bloc = CartBloc(ProductRepository());
-    _bloc.action.add(GetProductsAction());
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
       setState(() {
@@ -46,7 +44,6 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     _tabController.dispose();
-    _bloc.dispose();
     super.dispose();
   }
 
@@ -56,25 +53,12 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: StreamBuilder<AppState>(
-        stream: _bloc.state,
-        builder: (context, snapshot) => TabBarView(
-          controller: _tabController,
-          children: [
-            snapshot.data?.products == null
-                ? const Center(child: CircularProgressIndicator())
-                : ProductList(
-                    products: snapshot.data?.products,
-                    addProductToCart: (p) => _bloc.action.add(
-                        AddProductCartAction(p)),
-                  ),
-            CartPage(
-              products: snapshot.data?.cartProducts ?? [],
-              removeProductFromCart: (p) => _bloc.action
-                  .add(RemoveProductCartAction(p)),
-            ),
-          ],
-        ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          ProductList(),
+          CartPage(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => {
