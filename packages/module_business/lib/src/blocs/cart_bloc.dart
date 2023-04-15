@@ -1,38 +1,26 @@
 import 'dart:async';
 
-import 'package:module_business/src/actions/cart_actions.dart';
 import 'package:module_data/module_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class CartBloc extends Bloc<Action, AppState> {
+class CartBloc extends Cubit<AppState> {
   final ProductRepository _productRepository;
 
   CartBloc(this._productRepository) : super(const AppState());
 
-  @override
-  Stream<AppState> mapEventToState(Action action) async* {
-    if (action is GetProductsAction) {
-      try {
-        final products = await _productRepository.fetchAll();
-        yield state.copyWith(products: products);
-      } on Exception {
-        yield state.copyWith(products: []);
-      }
-    } else if (action is AddProductCartAction) {
-      try {
-        final products = await _productRepository.addProductToCart(state.cartProducts, action.product);
-        yield state.copyWith(cartProducts: products);
-      } on Exception {
-        yield state.copyWith(products: state.products);
-      }
-    } else if (action is RemoveProductCartAction) {
-      try {
-        final products = await _productRepository.removeProductFromCart(state.cartProducts, action.product);
-        yield state.copyWith(cartProducts: products);
-      } on Exception {
-        yield state.copyWith(products: state.products);
-      }
-    }
+  Future<void> getProducts() async {
+    final products = await _productRepository.fetchAll();
+    emit(state.copyWith(products: products));
+  }
+
+  Future<void> addProductToCart(ProductData product) async {
+    final products = await _productRepository.addProductToCart(state.cartProducts, product);
+    emit(state.copyWith(cartProducts: products));
+  }
+
+  Stream<AppState> removeProductFromCart(ProductData product) async* {
+    final products = await _productRepository.removeProductFromCart(state.cartProducts, product);
+    yield state.copyWith(cartProducts: products);
   }
 }

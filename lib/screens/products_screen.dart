@@ -26,7 +26,7 @@ class ProductList extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () => context
                               .read<CartBloc>()
-                              .add(AddProductCartAction(e)),
+                              .addProductToCart(e),
                           child: const Text('Add to cart'),
                         ),
                       ],

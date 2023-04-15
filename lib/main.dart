@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider<CartBloc>(
-        create: (_) => CartBloc(ProductRepository())..add(GetProductsAction()),
+        create: (_) => CartBloc(ProductRepository())..getProducts(),
         child: const HomePage(title: 'Flutter Demo Home Page')
       ),
     );

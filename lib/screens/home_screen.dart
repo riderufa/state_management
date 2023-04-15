@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:module_business/module_business.dart';
-import 'package:module_data/module_data.dart';
 import 'package:state_management/screens/cart_screen.dart';
 import 'package:state_management/screens/products_screen.dart';
 

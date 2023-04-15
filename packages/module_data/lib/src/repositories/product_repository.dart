@@ -1,5 +1,4 @@
 import '../models/product.dart';
-import '../models/cart.dart';
 
 List<ProductData> _products = const [
   ProductData(id: 0, title: 'First product title'),
@@ -32,6 +31,7 @@ class ProductRepository implements ProductRepositoryInterface {
   @override
   Future<List<ProductData>> fetchAll() async {
     await Future.delayed(const Duration(seconds: 2));
+    print(_products);
     return _products;
   }
 
