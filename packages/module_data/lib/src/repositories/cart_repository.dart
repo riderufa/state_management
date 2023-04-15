@@ -1,12 +1,12 @@
 import '../models/cart.dart';
 
-CartData _cart = const CartData(0, 'First cart title', []);
+CartData _cart = const CartData(id: 0, title: 'First cart title', products: []);
 
-abstract class CartManagerInterface {
+abstract class CartRepositoryInterface {
   Future<CartData> fetchOne();
 }
 
-class CartManager implements CartManagerInterface {
+class CartRepository implements CartRepositoryInterface {
   @override
   Future<CartData> fetchOne() async {
     await Future.delayed(const Duration(seconds: 2));
