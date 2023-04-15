@@ -23,7 +23,7 @@ class CartBloc {
     _actionsController.close();
   }
 
-  void _handleAction(Action action) async {
+  Future<void> _handleAction(Action action) async {
     if (action is GetProductsAction) {
       try {
         final products = await _productRepository.fetchAll();
@@ -34,7 +34,8 @@ class CartBloc {
     }
     if (action is AddProductCartAction) {
       try {
-        final products = await _productRepository.addProductToCart(action.cartProducts, action.product);
+        final products = await _productRepository.addProductToCart(
+            _currentState.cartProducts, action.product);
         _currentState = _currentState.copyWith(cartProducts: products);
       } on Exception {
         _currentState = _currentState.copyWith(cartProducts: []);
@@ -42,7 +43,8 @@ class CartBloc {
     }
     if (action is RemoveProductCartAction) {
       try {
-        final products = await _productRepository.removeProductFromCart(action.cartProducts, action.product);
+        final products = await _productRepository.removeProductFromCart(
+            _currentState.cartProducts, action.product);
         _currentState = _currentState.copyWith(cartProducts: products);
       } on Exception {
         _currentState = _currentState.copyWith(cartProducts: []);

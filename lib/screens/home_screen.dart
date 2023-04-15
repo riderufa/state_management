@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:module_business/module_business.dart';
 import 'package:module_data/module_data.dart';
 import 'package:state_management/screens/cart_screen.dart';
+import 'package:state_management/screens/products_screen.dart';
 
 class TabItem {
   String title;
@@ -60,15 +61,17 @@ class _HomePageState extends State<HomePage>
         builder: (context, snapshot) => TabBarView(
           controller: _tabController,
           children: [
-            ProductList(
-              products: snapshot.data?.products,
-              addProductToCart: (p) => _bloc.action
-                  .add(AddProductCartAction(snapshot.data!.cartProducts, p)),
-            ),
+            snapshot.data?.products == null
+                ? const Center(child: CircularProgressIndicator())
+                : ProductList(
+                    products: snapshot.data?.products,
+                    addProductToCart: (p) => _bloc.action.add(
+                        AddProductCartAction(p)),
+                  ),
             CartPage(
-              products: snapshot.data?.cartProducts,
+              products: snapshot.data?.cartProducts ?? [],
               removeProductFromCart: (p) => _bloc.action
-                  .add(RemoveProductCartAction(snapshot.data!.cartProducts, p)),
+                  .add(RemoveProductCartAction(p)),
             ),
           ],
         ),
@@ -88,44 +91,6 @@ class _HomePageState extends State<HomePage>
               icon: item.icon,
             )
         ],
-      ),
-    );
-  }
-}
-
-class ProductList extends StatelessWidget {
-  List<ProductData>? products;
-  final Function(ProductData) addProductToCart;
-
-  ProductList({
-    super.key,
-    this.products,
-    required this.addProductToCart,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        children: products
-                ?.map((e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            e.title,
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const Spacer(),
-                          ElevatedButton(
-                            onPressed: () => addProductToCart(e),
-                            child: const Text('Add to cart'),
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList() ??
-            [],
       ),
     );
   }

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:module_data/module_data.dart';
 
 class CartPage extends StatelessWidget {
-  CartPage({
+  const CartPage({
     super.key,
-    this.products,
+    required this.products,
     required this.removeProductFromCart,
   });
 
-  List<ProductData>? products;
+  final List<ProductData> products;
   final Function(ProductData) removeProductFromCart;
 
   @override
@@ -16,7 +16,7 @@ class CartPage extends StatelessWidget {
     return Center(
       child: ListView(
         children: products
-                ?.map(
+                .map(
                   (e) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -34,8 +34,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                 )
-                .toList() ??
-            [],
+                .toList(),
       ),
     );
   }

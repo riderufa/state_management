@@ -5,17 +5,15 @@ abstract class Action {}
 abstract class CartAction extends Action {}
 
 class AddProductCartAction extends CartAction {
-  final List<ProductData> cartProducts;
   final ProductData product;
 
-  AddProductCartAction(this.cartProducts, this.product);
+  AddProductCartAction(this.product);
 }
 
 class RemoveProductCartAction extends CartAction {
-  final List<ProductData> cartProducts;
   final ProductData product;
 
-  RemoveProductCartAction(this.cartProducts, this.product);
+  RemoveProductCartAction(this.product);
 }
 
 class GetProductsAction extends CartAction {}
