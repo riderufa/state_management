@@ -18,4 +18,22 @@ class RemoveProductCartAction extends CartAction {
 
 class GetProductsAction extends CartAction {}
 
+class ProductsNotLoadedAction {}
+
+class ProductsLoadedAction {
+  final List<ProductData> products;
+
+  ProductsLoadedAction(this.products);
+}
+
+class GetCartProductsAction extends CartAction {}
+
+class CartNotUpdatedAction {}
+
+class CartUpdatedAction {
+  final List<ProductData> cartProducts;
+
+  CartUpdatedAction(this.cartProducts);
+}
+
 class GetCartAction extends CartAction {}

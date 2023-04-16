@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:module_business/module_business.dart';
 import 'package:module_data/module_data.dart';
 import 'package:state_management/screens/cart_screen.dart';
@@ -17,9 +16,10 @@ final List<TabItem> _tabBar = [
 ];
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  const HomePage({super.key, required this.title, required this.onInit});
 
   final String title;
+  final void Function() onInit;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
+    widget.onInit();
     super.initState();
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
@@ -56,8 +57,8 @@ class _HomePageState extends State<HomePage>
       body: TabBarView(
         controller: _tabController,
         children: const [
-          ProductList(),
-          CartPage(),
+          ProductsConnector(),
+          CartConnector(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

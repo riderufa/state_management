@@ -16,6 +16,8 @@ List<ProductData> _products = const [
 ];
 
 abstract class ProductRepositoryInterface {
+  const ProductRepositoryInterface();
+
   Future<List<ProductData>> fetchAll();
   Future<ProductData> fetchOne(int productId);
   Future<List<ProductData>> addProductToCart(List<ProductData> cartProducts, ProductData product);
@@ -23,6 +25,8 @@ abstract class ProductRepositoryInterface {
 }
 
 class ProductRepository implements ProductRepositoryInterface {
+  const ProductRepository();
+
   @override
   Future<List<ProductData>> addProductToCart(List<ProductData> cartProducts, ProductData product) async {
     await Future.delayed(const Duration(seconds: 1));
