@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:module_business/module_business.dart';
 import 'package:module_data/module_data.dart';
-import 'package:redux/redux.dart';
+import 'package:provider/provider.dart';
 import 'package:state_management/screens/home_screen.dart';
 
 void main() {
@@ -10,34 +9,26 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final store = Store<AppState>(
-    appReducer,
-    initialState: AppState.loading(),
-    middleware: createStoreMiddleware(),
-  );
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StoreProvider(
-      store: store,
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: ((context) =>
+              CartState(const ProductRepository(), const CartRepository())),
+        )
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        routes: {
-          "/": (context) {
-            return HomePage(
-              title: 'Flutter Demo Home Page',
-              onInit: () {
-                StoreProvider.of<AppState>(context)
-                    .dispatch(GetProductsAction());
-              },
-            );
-          },
-        },
+        home: const HomePage(
+          title: 'Flutter Demo Home Page',
+        ),
       ),
     );
   }

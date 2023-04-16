@@ -48,8 +48,7 @@ class ProductRepository implements ProductRepositoryInterface {
   @override
   Future<List<ProductData>> removeProductFromCart(List<ProductData> cartProducts, ProductData product) async {
     await Future.delayed(const Duration(seconds: 1));
-    List<ProductData> newProducts = cartProducts;
-    newProducts.remove(product);
-    return cartProducts;
+    cartProducts.remove(product);
+    return [...cartProducts];
   }
 }

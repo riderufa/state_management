@@ -16,10 +16,9 @@ final List<TabItem> _tabBar = [
 ];
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title, required this.onInit});
+  const HomePage({super.key, required this.title});
 
   final String title;
-  final void Function() onInit;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,7 +31,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    widget.onInit();
     super.initState();
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
@@ -57,8 +55,8 @@ class _HomePageState extends State<HomePage>
       body: TabBarView(
         controller: _tabController,
         children: const [
-          ProductsConnector(),
-          CartConnector(),
+          ProductList(),
+          CartPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
