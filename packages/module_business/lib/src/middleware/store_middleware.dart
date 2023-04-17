@@ -10,9 +10,9 @@ List<Middleware<AppState>> createStoreMiddleware(
   final removeProduct = _createRemoveProductFromCart(productRepo);
 
   return [
-    TypedMiddleware<AppState, GetProductsAction>(getProducts),
-    TypedMiddleware<AppState, AddProductCartAction>(addProduct),
-    TypedMiddleware<AppState, RemoveProductCartAction>(removeProduct),
+    TypedMiddleware<AppState, GetProductsEvent>(getProducts),
+    TypedMiddleware<AppState, AddProductCartEvent>(addProduct),
+    TypedMiddleware<AppState, RemoveProductCartEvent>(removeProduct),
   ];
 }
 
@@ -21,11 +21,11 @@ Middleware<AppState> _createAddProductToCart(ProductRepositoryInterface reposito
     await repository
         .addProductToCart(store.state.cartProducts, action.product)
         .then((products) => store.dispatch(
-              CartUpdatedAction(
+              CartUpdatedEvent(
                 products,
               ),
             ))
-        .catchError((_) => store.dispatch(CartNotUpdatedAction()));
+        .catchError((_) => store.dispatch(CartNotUpdatedEvent()));
     next(action);
   };
 }
@@ -35,11 +35,11 @@ Middleware<AppState> _createRemoveProductFromCart(ProductRepositoryInterface rep
     await repository
         .removeProductFromCart(store.state.cartProducts, action.product)
         .then((products) => store.dispatch(
-              CartUpdatedAction(
+              CartUpdatedEvent(
                 products,
               ),
             ))
-        .catchError((_) => store.dispatch(CartNotUpdatedAction()));
+        .catchError((_) => store.dispatch(CartNotUpdatedEvent()));
     next(action);
   };
 }
@@ -49,11 +49,11 @@ Middleware<AppState> _createGetProducts(ProductRepositoryInterface repository) {
     await repository
         .fetchAll()
         .then((products) => store.dispatch(
-              ProductsLoadedAction(
+              ProductsLoadedEvent(
                 products,
               ),
             ))
-        .catchError((_) => store.dispatch(ProductsNotLoadedAction()));
+        .catchError((_) => store.dispatch(ProductsNotLoadedEvent()));
 
     next(action);
   };

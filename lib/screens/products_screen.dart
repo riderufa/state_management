@@ -33,7 +33,7 @@ class _ViewModel {
   factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
       products: store.state.products,
-      addProductToCart: (p) => store.dispatch(AddProductCartAction(p)),
+      addProductToCart: (p) => store.dispatch(AddProductCartEvent(p)),
     );
   }
 

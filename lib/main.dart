@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               title: 'Flutter Demo Home Page',
               onInit: () {
                 StoreProvider.of<AppState>(context)
-                    .dispatch(GetProductsAction());
+                    .dispatch(GetProductsEvent());
               },
             );
           },
