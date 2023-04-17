@@ -27,7 +27,7 @@ class CartPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => context
                             .read<CartBloc>()
-                            .add(RemoveProductCartAction(e)),
+                            .add(RemoveProductCartEvent(e)),
                         child: const Text('Remove from cart'),
                       ),
                     ],
