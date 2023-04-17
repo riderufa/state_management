@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _bloc = CartBloc(ProductRepository());
-    _bloc.action.add(GetProductsAction());
+    _bloc.action.add(GetProductsEvent());
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
       setState(() {
@@ -66,12 +66,12 @@ class _HomePageState extends State<HomePage>
                 : ProductList(
                     products: snapshot.data?.products,
                     addProductToCart: (p) => _bloc.action.add(
-                        AddProductCartAction(p)),
+                        AddProductCartEvent(p)),
                   ),
             CartPage(
               products: snapshot.data?.cartProducts ?? [],
               removeProductFromCart: (p) => _bloc.action
-                  .add(RemoveProductCartAction(p)),
+                  .add(RemoveProductCartEvent(p)),
             ),
           ],
         ),
